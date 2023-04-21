@@ -1,30 +1,11 @@
 package com.example.weatherapppankaj.database
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
-import net.sqlcipher.database.SQLiteDatabase
-import net.sqlcipher.database.SupportFactory
+import com.example.weatherapppankaj.database.dao.UserDao
+import com.example.weatherapppankaj.database.entities.Users
 
-
-@Database(entities = [], version = 1)
-abstract class DatabaseClient : RoomDatabase() {
-        companion object {
-            private var INSTANCE: DatabaseClient? = null
-
-            fun buildDatabase(pass: String, context: Context): DatabaseClient {
-
-                if (INSTANCE == null) {
-                    val supportFactory = SupportFactory(SQLiteDatabase.getBytes(pass.toCharArray()))
-
-                    INSTANCE =
-                        Room.databaseBuilder(context, DatabaseClient::class.java, "Weather")
-                            .openHelperFactory(supportFactory).fallbackToDestructiveMigration().build()
-                }
-                return INSTANCE as DatabaseClient
-            }
-        }
-
-        abstract fun getDao(): UserDao
+@Database(entities = [Users::class], version = 1, exportSchema = false)
+abstract class DatabaseClient:RoomDatabase() {
+        abstract fun getUserDao(): UserDao
     }
