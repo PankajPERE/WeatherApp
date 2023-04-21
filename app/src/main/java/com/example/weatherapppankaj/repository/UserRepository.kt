@@ -7,8 +7,8 @@ import javax.inject.Inject
 
 class UserRepository @Inject constructor(private val databaseClient: DatabaseClient) {
 
-    fun insertUser(user: Users) = databaseClient.getUserDao().insertUser(user)
+    suspend fun insertUser(user: Users) = databaseClient.getUserDao().insertUser(user)
 
-    fun loginUser(email:String, password:String) = databaseClient.getUserDao().loginUser(email,password)
+    suspend fun loginUser(email:String, password:String) = databaseClient.getUserDao().loginUser(email,password)
 
 }

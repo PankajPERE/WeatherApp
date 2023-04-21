@@ -8,11 +8,14 @@ import androidx.activity.viewModels
 import com.example.weatherapppankaj.R
 import com.example.weatherapppankaj.databinding.ActivityLoginBinding
 import com.example.weatherapppankaj.databinding.ActivitySignUpBinding
+import com.example.weatherapppankaj.utils.CommonUtils
+import com.example.weatherapppankaj.utils.CommonUtils.showToast
+import com.example.weatherapppankaj.utils.ResponseListener
 import com.example.weatherapppankaj.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), ResponseListener {
 
     private lateinit var binding: ActivityLoginBinding
     private val userViewModel: UserViewModel by viewModels()
@@ -23,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        userViewModel.responseListener = this
 
         binding.btnSignup.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
@@ -34,7 +38,27 @@ class LoginActivity : AppCompatActivity() {
             pass = binding.edtPass.text.toString()
 
             userViewModel.login(email, pass)
-            Toast.makeText(this,"Login successful",Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onLoading() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSuccess(message: String?) {
+        showToast(this, message!!)
+        startWeatherActivity()
+    }
+
+    private fun startWeatherActivity() {
+        val intent = Intent(this,MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+    }
+
+    override fun onError(message: String?) {
+        showToast(this, message!!)
     }
 }
