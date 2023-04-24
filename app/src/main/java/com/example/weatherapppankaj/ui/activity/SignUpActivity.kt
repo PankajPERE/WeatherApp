@@ -39,13 +39,7 @@ class SignUpActivity : AppCompatActivity(), ResponseListener {
 
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
-    }
-
     override fun onLoading() {
-        TODO("Not yet implemented")
     }
 
     override fun onSuccess(message: String?) {
@@ -54,7 +48,7 @@ class SignUpActivity : AppCompatActivity(), ResponseListener {
     }
 
     private fun startWeatherActivity() {
-        val intent = Intent(this,MainActivity::class.java)
+        val intent = Intent(this,LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)

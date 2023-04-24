@@ -11,4 +11,5 @@
     </style>
 
     <style name="Theme.WeatherAppPankaj" parent="Base.Theme.WeatherAppPankaj" />
+
 </resources>

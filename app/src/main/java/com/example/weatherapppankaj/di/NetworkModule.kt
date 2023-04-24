@@ -1,6 +1,8 @@
 package com.example.weatherapppankaj.di
 
+import com.example.weatherapppankaj.BuildConfig
 import com.example.weatherapppankaj.network.ApiService
+import com.example.weatherapppankaj.utils.CommonUtils
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -11,8 +13,15 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.security.SecureRandom
+import java.security.cert.CertificateException
+import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 
 @InstallIn(SingletonComponent::class)
@@ -36,6 +45,40 @@ class NetworkModule {
     }
 
     @Provides
+    fun sslClientProvider(): OkHttpClient.Builder {
+        // Create a trust manager that does not validate certificate chains
+        val trustAllCerts = arrayOf<TrustManager>(
+            object : X509TrustManager {
+                @Throws(CertificateException::class)
+                override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {
+                }
+
+                @Throws(CertificateException::class)
+                override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
+                }
+
+                override fun getAcceptedIssuers(): Array<X509Certificate> {
+                    return arrayOf()
+                }
+            }
+        )
+
+        // Install the all-trusting trust manager
+        val sslContext = SSLContext.getInstance("SSL")
+        sslContext.init(null, trustAllCerts, SecureRandom())
+
+        // Create an ssl socket factory with our all-trusting manager
+
+        // Create an ssl socket factory with our all-trusting manager
+        val sslSocketFactory = sslContext.socketFactory
+
+        val builder = OkHttpClient.Builder()
+        builder.sslSocketFactory(sslSocketFactory, trustAllCerts.get(0) as X509TrustManager)
+        builder.hostnameVerifier(HostnameVerifier { hostname, session -> true })
+        return builder
+    }
+
+    @Provides
     @Singleton
     fun retrofitProvider(
         gson: Gson,
@@ -43,7 +86,7 @@ class NetworkModule {
         builder: OkHttpClient.Builder
     ):Retrofit{
         return  Retrofit.Builder()
-            .baseUrl("")
+            .baseUrl(BuildConfig.BASE_URL)
             .client(builder.build())
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -51,7 +94,7 @@ class NetworkModule {
     }
 
     @Provides
-    fun apiInterface(retrofit: Retrofit): ApiService =
+    fun apiService(retrofit: Retrofit): ApiService =
         retrofit.create(ApiService::class.java)
 
 

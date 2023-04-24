@@ -3,12 +3,8 @@ package com.example.weatherapppankaj.ui.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
-import com.example.weatherapppankaj.R
 import com.example.weatherapppankaj.databinding.ActivityLoginBinding
-import com.example.weatherapppankaj.databinding.ActivitySignUpBinding
-import com.example.weatherapppankaj.utils.CommonUtils
 import com.example.weatherapppankaj.utils.CommonUtils.showToast
 import com.example.weatherapppankaj.utils.ResponseListener
 import com.example.weatherapppankaj.viewmodel.UserViewModel
@@ -42,7 +38,6 @@ class LoginActivity : AppCompatActivity(), ResponseListener {
     }
 
     override fun onLoading() {
-        TODO("Not yet implemented")
     }
 
     override fun onSuccess(message: String?) {
@@ -51,7 +46,7 @@ class LoginActivity : AppCompatActivity(), ResponseListener {
     }
 
     private fun startWeatherActivity() {
-        val intent = Intent(this,MainActivity::class.java)
+        val intent = Intent(this,HomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)

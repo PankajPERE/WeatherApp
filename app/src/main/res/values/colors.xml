@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="colorPrimary">#323232</color>
+    <color name="tabBackground">#737373</color>
     <color name="colorPrimaryDark">#FF000000</color>
     <color name="colorAccent">#FF000000</color>
 

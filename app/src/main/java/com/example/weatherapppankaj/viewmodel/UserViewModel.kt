@@ -58,7 +58,16 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
         viewModelScope.launch {
             val response = userRepository.loginUser(email,pass)
 
-            Log.e("LOGIN",response.email.toString())
+            response?.let {
+                responseListener?.onSuccess(CommonUtils.LOGIN_SUCCESSFUL)
+                Log.e("LOGIN",response.email.toString())
+                return@launch
+            } ?: run{
+                responseListener?.onError(CommonUtils.USER_NOT_FOUND)
+                return@launch
+            }
+
+
         }
     }
 }

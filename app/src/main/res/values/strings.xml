@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">WeatherAppPankaj</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="please_turn_on_your_gps">Please turn on your GPS</string>
+    <string name="please_check_you_internet_connection">Please check you internet connection</string>
+    <string name="today">Today</string>
+    <string name="history">History</string>
+    <string name="default_weather_icon">01d</string>
 </resources>
