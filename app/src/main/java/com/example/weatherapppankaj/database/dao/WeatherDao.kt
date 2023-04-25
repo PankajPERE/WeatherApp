@@ -9,7 +9,6 @@ import com.example.weatherapppankaj.database.entities.Weather
 
 @Dao
 interface WeatherDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWeatherData(weather: Weather)
 

@@ -13,12 +13,16 @@ import java.util.Locale
 
 object CommonUtils {
 
+
+    const val SOMETHING_WENT_WRONG ="Something went wrong"
     const val ENTER_EMAIL ="Enter email"
     const val ENTER_PASSWORD ="Enter password"
     const val ENTER_NAME ="Enter name"
+    const val REGISTRATION_SUCCESSFUL ="Registration Successful"
     const val LOGIN_SUCCESSFUL ="Login successful"
     const val USER_NOT_FOUND ="User not found"
     const val GPS_REQUEST_CODE = 99
+    const val emailPattern ="^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$"
 
 
     fun showToast(context: Context, message:String){

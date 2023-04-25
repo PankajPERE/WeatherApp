@@ -1,4 +1,4 @@
-package com.example.weatherapppankaj.ui.Adapter
+package com.example.weatherapppankaj.ui.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

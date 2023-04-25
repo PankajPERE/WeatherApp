@@ -9,7 +9,7 @@ data class Weather(
     var imgUrl:String?="",
     var city:String?="",
     var country:String?="",
-    var time:Int?,
+    var time: String?="",
     var sunrise:Int?,
     var sunset:Int?
 ){

@@ -15,7 +15,7 @@ interface UserDao {
 
     //checking user exist or not in our db
     @Query("SELECT * FROM Users WHERE email LIKE :email AND password LIKE :password")
-    suspend fun loginUser(email: String, password: String): Users
+    suspend fun loginUser(email: String, password: String): Users?
 
     @Query("DELETE FROM Users")
     fun deleteAll()

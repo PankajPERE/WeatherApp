@@ -5,15 +5,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
+import com.example.weatherapppankaj.R
 import com.example.weatherapppankaj.database.entities.Users
 import com.example.weatherapppankaj.databinding.ActivitySignUpBinding
+import com.example.weatherapppankaj.utils.AppResponse
 import com.example.weatherapppankaj.utils.CommonUtils.showToast
 import com.example.weatherapppankaj.utils.ResponseListener
 import com.example.weatherapppankaj.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignUpActivity : AppCompatActivity(), ResponseListener {
+class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
     private val userViewModel:UserViewModel by viewModels()
@@ -25,7 +28,7 @@ class SignUpActivity : AppCompatActivity(), ResponseListener {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        userViewModel.responseListener = this
+
 
 
         binding.btnSignup.setOnClickListener {
@@ -37,14 +40,22 @@ class SignUpActivity : AppCompatActivity(), ResponseListener {
             userViewModel.insertUser(user)
         }
 
+        setObserver()
     }
 
-    override fun onLoading() {
-    }
-
-    override fun onSuccess(message: String?) {
-        showToast(this,message!!)
-        startWeatherActivity()
+    private fun setObserver() {
+        userViewModel.appResponse.observe( this, Observer {
+            when(it){
+                is AppResponse.Error -> {
+                    showToast(this, it.message?:getString(R.string.something_went_wrong))
+                }
+                is AppResponse.Loading -> {}
+                is AppResponse.Success -> {
+                    showToast(this, it.data?.toString()?:getString(R.string.something_went_wrong))
+                    startWeatherActivity()
+                }
+            }
+        })
     }
 
     private fun startWeatherActivity() {
@@ -54,10 +65,4 @@ class SignUpActivity : AppCompatActivity(), ResponseListener {
         startActivity(intent)
         finish()
     }
-
-    override fun onError(message: String?) {
-        showToast(this,message!!)
-    }
-
-
 }

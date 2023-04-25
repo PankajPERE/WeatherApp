@@ -7,4 +7,6 @@
     <string name="today">Today</string>
     <string name="history">History</string>
     <string name="default_weather_icon">01d</string>
+    <string name="please_provide_required_permission">Please provide required permission</string>
+    <string name="something_went_wrong">Something went wrong</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.example.weatherapppankaj.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,7 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.weatherapppankaj.database.entities.Weather
 import com.example.weatherapppankaj.model.WeatherResponse
 import com.example.weatherapppankaj.repository.WeatherRepository
+import com.example.weatherapppankaj.utils.AppResponse
+import com.example.weatherapppankaj.utils.CommonUtils
 import com.example.weatherapppankaj.utils.Resource
+import com.example.weatherapppankaj.utils.Utils.currentDateAndTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -17,35 +19,38 @@ import javax.inject.Inject
 @HiltViewModel
 class WeatherViewModel @Inject constructor(private val weatherRepository: WeatherRepository) : ViewModel(){
 
-    val weatherData: MutableLiveData<Resource<WeatherResponse>> = MutableLiveData()
+    private val _weatherData: MutableLiveData<Resource<WeatherResponse>> = MutableLiveData()
+    val weatherData: LiveData<Resource<WeatherResponse>>
+        get() = _weatherData
 
-    fun getWeatherDataRemote( lat:Double, lon:Double, apiKey:String) = viewModelScope.launch {
-        weatherData.postValue(Resource.Loading())
+    fun getWeatherDataRemote(lat:Double, lon:Double, apiKey:String) = viewModelScope.launch {
+        _weatherData.postValue(Resource.Loading())
         val response = weatherRepository.getWeatherDataRemote(lat,lon,apiKey)
-        weatherData.postValue(handleWeatherDataResponse(response))
+        _weatherData.postValue(handleWeatherDataResponse(response))
     }
 
-    private fun handleWeatherDataResponse(response: Response<WeatherResponse>): Resource<WeatherResponse>? {
-        if (response.isSuccessful){
-            response.body()?.let { resultResponse->
+    private fun handleWeatherDataResponse(response: WeatherResponse?): Resource<WeatherResponse>? {
+        if (response != null){
 
                 val weather = Weather(
-                    temp = resultResponse.main.temp,
-                    imgUrl = resultResponse.weather[0].icon,
-                    city = resultResponse.name,
-                    country = resultResponse.sys.country,
-                    time = resultResponse.dt,
-                    sunrise = resultResponse.sys.sunrise,
-                    sunset = resultResponse.sys.sunset
+                    temp = response.main?.temp,
+                    imgUrl = response.weather?.get(0)?.icon,
+                    city = response.name,
+                    country = response.sys?.country,
+                    time = currentDateAndTime(),
+                    sunrise = response.sys?.sunrise,
+                    sunset = response.sys?.sunset
                 )
                 viewModelScope.launch {
                     weatherRepository.addWeatherData(weather)
                 }
-                return Resource.Success(resultResponse)
-            }
+                return Resource.Success(response)
         }
+        return Resource.Error(CommonUtils.SOMETHING_WENT_WRONG)
+    }
 
-        return Resource.Error(response.message())
+    fun getWeatherHistory() : LiveData<List<Weather>> {
+        return weatherRepository.getWeatherHistory()
     }
 
 }

@@ -17,6 +17,7 @@ import com.example.weatherapppankaj.R
 import com.example.weatherapppankaj.databinding.FragmentTodayBinding
 import com.example.weatherapppankaj.ui.activity.HomeActivity
 import com.example.weatherapppankaj.utils.CommonUtils
+import com.example.weatherapppankaj.utils.CommonUtils.showToast
 import com.example.weatherapppankaj.utils.Resource
 import com.example.weatherapppankaj.utils.Utils.convertDate
 import com.example.weatherapppankaj.utils.Utils.convertKelvinToCel
@@ -82,6 +83,22 @@ class TodayFragment : Fragment() {
         )
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == CommonUtils.GPS_REQUEST_CODE){
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                getLocationData()
+            }else{
+                showToast(requireContext(),getString(R.string.please_provide_required_permission))
+            }
+
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
     private fun loadWeatherDataRemote(latitude: Double, longitude: Double) {
 
         weatherViewModel.getWeatherDataRemote(latitude, longitude, BuildConfig.API_KEY)
@@ -93,14 +110,14 @@ class TodayFragment : Fragment() {
                     response.data?.let {
                         binding.rlData.isVisible = true
                         binding.progrssBar.isVisible = false
-                        val intTemp = convertKelvinToCel(it.main.temp)
+                        val intTemp = convertKelvinToCel(it.main?.temp)
                         binding.txtWeather.text = intTemp
                         binding.txtCity.text = "${it.name}, "
-                        binding.txtCountry.text = it.sys.country
-                        binding.txtSunriseTime.text = convertDate(it.sys.sunrise)
-                        binding.txtSunsetTime.text = convertDate(it.sys.sunset)
+                        binding.txtCountry.text = it.sys?.country?:""
+                        binding.txtSunriseTime.text = convertDate(it.sys?.sunrise)
+                        binding.txtSunsetTime.text = convertDate(it.sys?.sunset)
 
-                        val imgUrl = it.weather[0].icon?.let { img ->
+                        val imgUrl = it.weather?.get(0)?.icon?.let { img ->
                             getImageUrlByName(img)
                         } ?: run {
                             getImageUrlByName(getString(R.string.default_weather_icon))

@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.example.weatherapppankaj.R
 import com.example.weatherapppankaj.databinding.ActivityMainBinding
-import com.example.weatherapppankaj.ui.Adapter.ViewPagerAdapter
+import com.example.weatherapppankaj.ui.adapter.ViewPagerAdapter
 import com.example.weatherapppankaj.ui.fragments.HistoryFragment
 import com.example.weatherapppankaj.ui.fragments.TodayFragment
 import com.example.weatherapppankaj.viewmodel.WeatherViewModel

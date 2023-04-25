@@ -1,8 +1,8 @@
 package com.example.weatherapppankaj.model
 
 data class Weather(
-    val description: String,
+    val description: String?,
     val icon: String?,
-    val id: Int,
-    val main: String
+    val id: Int?,
+    val main: String?
 )
