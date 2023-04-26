@@ -121,6 +121,18 @@ class UserViewModelTest {
         val result = viewModel.appResponse.getOrAwaitValue()
         assertTrue(result is AppResponse.Success)
     }
+    @Test
+    fun testLogin_expected_error()= runTest{
+
+        val user = null
+
+        Mockito.`when`(repository.loginUser("pankaj@gmail.com","pankaj")).thenReturn(user)
+        val viewModel = UserViewModel(repository)
+        viewModel.login("pankaj@gmail.com","pankaj")
+        testDispatcheer.scheduler.advanceUntilIdle()
+        val result = viewModel.appResponse.getOrAwaitValue()
+        assertTrue(result is AppResponse.Error)
+    }
 
     @Test
     fun testLoginInvalidEmail_expected_error()= runTest{

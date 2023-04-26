@@ -5,8 +5,6 @@ import com.example.weatherapppankaj.database.DatabaseClient
 import com.example.weatherapppankaj.database.entities.Weather
 import com.example.weatherapppankaj.model.WeatherResponse
 import com.example.weatherapppankaj.network.ApiService
-import com.example.weatherapppankaj.utils.CommonUtils
-import com.example.weatherapppankaj.utils.Resource
 import javax.inject.Inject
 
 class WeatherRepository @Inject constructor(private val apiService: ApiService, private val db: DatabaseClient) {

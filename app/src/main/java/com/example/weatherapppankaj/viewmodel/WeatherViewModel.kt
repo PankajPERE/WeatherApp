@@ -7,13 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.weatherapppankaj.database.entities.Weather
 import com.example.weatherapppankaj.model.WeatherResponse
 import com.example.weatherapppankaj.repository.WeatherRepository
-import com.example.weatherapppankaj.utils.AppResponse
 import com.example.weatherapppankaj.utils.CommonUtils
 import com.example.weatherapppankaj.utils.Resource
 import com.example.weatherapppankaj.utils.Utils.currentDateAndTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel

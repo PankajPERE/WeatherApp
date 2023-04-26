@@ -1,13 +1,8 @@
 package com.example.weatherapppankaj.utils
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.example.weatherapppankaj.BuildConfig
 import java.math.RoundingMode
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 import java.util.Date
 import java.util.Locale
 
@@ -33,7 +28,6 @@ object Utils {
 
     fun currentDateAndTime(): String {
         val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-
         return sdf.format(Date())
     }
 

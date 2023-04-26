@@ -4,12 +4,7 @@ import android.content.Context
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.widget.Toast
-import com.example.weatherapppankaj.BuildConfig
 import com.example.weatherapppankaj.R
-import java.math.RoundingMode
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 object CommonUtils {
 

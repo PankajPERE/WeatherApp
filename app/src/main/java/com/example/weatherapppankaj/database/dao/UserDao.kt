@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.weatherapppankaj.database.entities.Users
-import com.example.weatherapppankaj.database.entities.Weather
 
 @Dao
 interface UserDao {

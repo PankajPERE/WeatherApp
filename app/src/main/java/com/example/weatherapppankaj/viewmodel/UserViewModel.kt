@@ -7,9 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.weatherapppankaj.database.entities.Users
 import com.example.weatherapppankaj.repository.UserRepository
 import com.example.weatherapppankaj.utils.AppResponse
-import com.example.weatherapppankaj.utils.Resource
 import com.example.weatherapppankaj.utils.CommonUtils
-import com.example.weatherapppankaj.utils.ResponseListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

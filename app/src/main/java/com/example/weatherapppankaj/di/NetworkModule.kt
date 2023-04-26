@@ -2,7 +2,6 @@ package com.example.weatherapppankaj.di
 
 import com.example.weatherapppankaj.BuildConfig
 import com.example.weatherapppankaj.network.ApiService
-import com.example.weatherapppankaj.utils.CommonUtils
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module

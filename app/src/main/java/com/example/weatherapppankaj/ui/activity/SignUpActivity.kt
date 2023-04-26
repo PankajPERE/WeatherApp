@@ -3,7 +3,6 @@ package com.example.weatherapppankaj.ui.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.weatherapppankaj.R
@@ -11,7 +10,6 @@ import com.example.weatherapppankaj.database.entities.Users
 import com.example.weatherapppankaj.databinding.ActivitySignUpBinding
 import com.example.weatherapppankaj.utils.AppResponse
 import com.example.weatherapppankaj.utils.CommonUtils.showToast
-import com.example.weatherapppankaj.utils.ResponseListener
 import com.example.weatherapppankaj.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -37,4 +37,10 @@ class UtilsTest {
         val result = utils.getImageUrlByName("50d")
         assertEquals("https://openweathermap.org/img/wn/50d@4x.png", result)
     }
+
+    @Test
+    fun getCurrentDate_expected_empty_date(){
+        val result = utils.currentDateAndTime()
+        assertTrue( result.isNotEmpty())
+    }
 }

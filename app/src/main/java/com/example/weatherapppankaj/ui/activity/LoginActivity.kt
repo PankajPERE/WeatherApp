@@ -9,7 +9,6 @@ import com.example.weatherapppankaj.R
 import com.example.weatherapppankaj.databinding.ActivityLoginBinding
 import com.example.weatherapppankaj.utils.AppResponse
 import com.example.weatherapppankaj.utils.CommonUtils.showToast
-import com.example.weatherapppankaj.utils.ResponseListener
 import com.example.weatherapppankaj.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
